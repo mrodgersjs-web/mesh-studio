@@ -33,9 +33,9 @@ test = ["pytest>=7", "pytest-timeout>=2"]
 dev = ["pytest>=7", "pytest-timeout>=2", "fastapi>=0.100", "uvicorn[standard]>=0.20", "httpx>=0.24"]
 
 [project.urls]
-Homepage = "https://github.com/rodgemd1-lgtm/RIG-Mesh"
-Issues = "https://github.com/rodgemd1-lgtm/RIG-Mesh/issues"
-Source = "https://github.com/rodgemd1-lgtm/RIG-Mesh"
+Homepage = "https://github.com/mrodgersjs-web/mesh-studio"
+Issues = "https://github.com/mrodgersjs-web/mesh-studio/issues"
+Source = "https://github.com/mrodgersjs-web/mesh-studio"
 
 [project.scripts]
 rig-mesh = "rig_mesh.cli:main"

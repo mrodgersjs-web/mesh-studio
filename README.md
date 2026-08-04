@@ -1,3 +1,21 @@
+# mesh-studio
+
+> Control-plane CLI for AI model fleets — probe, boot, recover subsystems with proof.
+
+## Employer summary
+Fleet control plane above local inference sprawl. Declares providers/queues/dashboards as subsystems; one CLI for status/probe/boot/recover.
+
+## Proof in 60 seconds
+```bash
+git clone https://github.com/mrodgersjs-web/mesh-studio.git
+cd mesh-studio && python3 -m pip install -e . && bash scripts/smoke.sh
+```
+
+## Public boundary
+See [docs/public-boundary.md](docs/public-boundary.md).
+
+---
+
 # RIG Mesh
 
 > **A control-plane CLI for AI models and work routing.**
@@ -53,12 +71,12 @@ the underlying tools.
 ## Install
 
 ```bash
-pip install git+https://github.com/rodgemd1-lgtm/RIG-Mesh.git
+pip install git+https://github.com/mrodgersjs-web/mesh-studio.git
 ```
 
 Or from source:
 ```bash
-git clone https://github.com/rodgemd1-lgtm/RIG-Mesh.git
+git clone https://github.com/mrodgersjs-web/mesh-studio.git
 cd RIG-Mesh
 pip install -e .                    # CLI only (stdlib)
 pip install -e ".[dashboard]"       # CLI + :8091 FastAPI dashboard
