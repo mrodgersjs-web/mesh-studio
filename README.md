@@ -444,3 +444,108 @@ quality-gate summary — it never deploys or merges automatically.
 ## License
 
 MIT — see [`LICENSE`](LICENSE).
+
+
+---
+
+## FDE bar (this studio)
+
+| Practice | Here |
+| --- | --- |
+| Employer summary | top of README |
+| 60s / smoke proof | ......................................                                   [100%]
+{
+  "ok": true,
+  "checked": 7,
+  "missing": []
+}
+{
+  "ok": true,
+  "failed": 0,
+  "results": {
+    "robust_madz": {
+      "ok": true,
+      "verdict": "PASS"
+    },
+    "surprisal": {
+      "ok": true,
+      "verdict": "PASS"
+    },
+    "blend_value": {
+      "ok": true,
+      "verdict": "PASS"
+    },
+    "expected_free_energy": {
+      "ok": true,
+      "verdict": "PASS"
+    },
+    "composite_sigma": {
+      "ok": true,
+      "verdict": "PASS"
+    },
+    "pbt": {
+      "ok": true,
+      "verdict": "PASS"
+    },
+    "proof_packet": {
+      "ok": true,
+      "seal_prefix": "sha256:72103a22618be0c5a"
+    },
+    "unittest_l10": {
+      "ok": true,
+      "ran": 38,
+      "failures": 0
+    }
+  }
+}
+jake-studio smoke PASS |
+| Public boundary |  |
+| Claim under test | '"rig-mesh smoke PASS"' |
+| Related fleet | [profile](https://github.com/mrodgersjs-web) · [resume](https://github.com/mrodgersjs-web/resume) · [patents teaser](https://github.com/mrodgersjs-web/patents) |
+
+If ......................................                                   [100%]
+{
+  "ok": true,
+  "checked": 7,
+  "missing": []
+}
+{
+  "ok": true,
+  "failed": 0,
+  "results": {
+    "robust_madz": {
+      "ok": true,
+      "verdict": "PASS"
+    },
+    "surprisal": {
+      "ok": true,
+      "verdict": "PASS"
+    },
+    "blend_value": {
+      "ok": true,
+      "verdict": "PASS"
+    },
+    "expected_free_energy": {
+      "ok": true,
+      "verdict": "PASS"
+    },
+    "composite_sigma": {
+      "ok": true,
+      "verdict": "PASS"
+    },
+    "pbt": {
+      "ok": true,
+      "verdict": "PASS"
+    },
+    "proof_packet": {
+      "ok": true,
+      "seal_prefix": "sha256:994147477512cf8a6"
+    },
+    "unittest_l10": {
+      "ok": true,
+      "ran": 38,
+      "failures": 0
+    }
+  }
+}
+jake-studio smoke PASS fails, the README claim is considered false until fixed.
