@@ -1,6 +1,8 @@
 # mesh-studio
 
 > Control-plane CLI for AI model fleets — probe, boot, recover subsystems with proof.
+**Outcome:** `rig-mesh smoke` is a deterministic local smoke test covering 17 default subsystems, with JSON output and exit code 0 for ok / 1 for warn-or-fail.
+
 
 ## Employer summary
 Fleet control plane above local inference sprawl. Declares providers/queues/dashboards as subsystems; one CLI for status/probe/boot/recover.
