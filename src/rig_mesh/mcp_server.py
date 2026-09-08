@@ -45,6 +45,7 @@ health_check_prompt
 """
 from __future__ import annotations
 
+import argparse
 import json
 from typing import Any
 
@@ -138,7 +139,7 @@ def prompt_health_check(snapshot: dict | None = None) -> str:
 # MCP server — requires the ``mcp`` optional extra
 # ---------------------------------------------------------------------------
 
-def build_mcp_server():  # type: ignore[return]
+def build_mcp_server(*, port: int = 8092):  # type: ignore[return]
     """Build and return the FastMCP server instance.
 
     Raises ImportError with a helpful message if ``mcp`` is not installed.
@@ -153,11 +154,11 @@ def build_mcp_server():  # type: ignore[return]
 
     mcp = FastMCP(
         name="rig-mesh",
-        version="1.0.0",
-        description=(
+        instructions=(
             "RIG Mesh control-plane MCP server. "
             "Exposes subsystem health, audit, and recovery tools to agent clients."
         ),
+        port=port,
     )
 
     # ---- Tools ----
@@ -216,32 +217,35 @@ def serve(use_sse: bool = False, sse_port: int = 8092) -> None:
         use_sse: If True, serve via HTTP+SSE on ``sse_port`` instead of stdio.
         sse_port: Port for SSE transport (default 8092).
     """
-    mcp_server = build_mcp_server()
+    mcp_server = build_mcp_server(port=sse_port)
     if use_sse:
-        mcp_server.run(transport="sse", port=sse_port)
+        mcp_server.run(transport="sse")
     else:
         mcp_server.run(transport="stdio")
 
 
 # ---------------------------------------------------------------------------
 
-if __name__ == "__main__":
-    import argparse
-
-    p = argparse.ArgumentParser(description="RIG Mesh MCP server")
-    p.add_argument(
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="RIG Mesh MCP server")
+    parser.add_argument(
         "--sse",
         action="store_true",
         help="Use SSE transport instead of stdio",
     )
-    p.add_argument(
+    parser.add_argument(
         "--port",
         type=int,
         default=8092,
         help="Port for SSE transport (default: 8092)",
     )
-    ns = p.parse_args()
-    serve(use_sse=ns.sse, sse_port=ns.port)
+    namespace = parser.parse_args(argv)
+    serve(use_sse=namespace.sse, sse_port=namespace.port)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
 
 
 __all__ = [
@@ -255,5 +259,6 @@ __all__ = [
     "prompt_health_check",
     "build_mcp_server",
     "serve",
+    "main",
     "HEALTH_CHECK_PROMPT",
 ]

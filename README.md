@@ -118,6 +118,24 @@ rig-mesh-mcp                           # stdio transport (default; for Claude De
 rig-mesh-mcp --sse --port 8092        # SSE transport for remote clients
 ```
 
+### Claude Desktop stdio
+
+From the mesh-studio clone, install the MCP extra with `python -m pip install -e ".[mcp]"` in the Python environment Claude Desktop uses. Replace the example `cwd` with the clone's path.
+
+```json
+{
+  "mcpServers": {
+    "rig-mesh": {
+      "command": "python",
+      "args": ["-m", "rig_mesh.mcp_server"],
+      "cwd": "/path/to/mesh-studio"
+    }
+  }
+}
+```
+
+This launches `python -m rig_mesh.mcp_server` over stdio.
+
 ### MCP tools
 
 | Tool | Description |

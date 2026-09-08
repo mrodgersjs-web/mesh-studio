@@ -209,3 +209,37 @@ def test_build_mcp_server_raises_import_error_when_mcp_missing(monkeypatch):
             sys.modules.pop("mcp", None)
         else:
             sys.modules["mcp"] = original
+
+
+# ---------------------------------------------------------------------------
+# CLI and SSE transport
+
+def test_main_parses_sse_port(monkeypatch):
+    from rig_mesh import mcp_server
+
+    called = []
+
+    def fake_serve(use_sse=False, sse_port=8092):
+        called.append((use_sse, sse_port))
+
+    monkeypatch.setattr(mcp_server, "serve", fake_serve)
+    mcp_server.main(["--sse", "--port", "9000"])
+    assert called == [(True, 9000)]
+
+
+def test_serve_passes_port_to_constructor_and_only_transport_to_run(monkeypatch):
+    from rig_mesh import mcp_server
+
+    observed = {}
+
+    class FakeServer:
+        def run(self, **kwargs):
+            observed["run"] = kwargs
+
+    def fake_build_mcp_server(*, port):
+        observed["port"] = port
+        return FakeServer()
+
+    monkeypatch.setattr(mcp_server, "build_mcp_server", fake_build_mcp_server)
+    mcp_server.serve(use_sse=True, sse_port=9000)
+    assert observed == {"port": 9000, "run": {"transport": "sse"}}
