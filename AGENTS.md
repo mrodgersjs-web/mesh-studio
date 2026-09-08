@@ -214,3 +214,35 @@ python -c "from rig_mesh.mcp_server import tool_smoke; print(tool_smoke())"
 | `quality_readiness` | 6/10 | 7/10 | Smoke gate in weekly workflow |
 | `weekly_automation_readiness` | 7/10 | 8/10 | `weekly.yml` added |
 | `proof_readiness` | 2/10 | 5/10 | Proof paths documented |
+
+---
+
+## Repository quick reference
+
+Main implementation paths:
+
+- `src/rig_mesh/`: CLI, registry, audit, recovery, and MCP surfaces.
+- `tests/`: behavioral and subsystem coverage.
+- `scripts/`: repository smoke entry point.
+- `docs/`: architecture, evaluation, and public-boundary guidance.
+- `graft/`: generated context; read when useful and preserve unchanged.
+
+Bootstrap from the repository root:
+
+```bash
+python3 -m pip install -e .
+```
+
+Use the repository smoke as the completion test:
+
+```bash
+bash scripts/smoke.sh
+```
+
+Run the deterministic CLI smoke:
+
+```bash
+rig-mesh smoke
+```
+
+Always run the smoke command before claiming done.
