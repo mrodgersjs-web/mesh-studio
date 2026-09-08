@@ -2,6 +2,8 @@
 
 > Control-plane CLI for AI model fleets — probe, boot, recover subsystems with proof.
 **Outcome:** `rig-mesh smoke` is a deterministic local smoke test covering 17 default subsystems, with JSON output and exit code 0 for ok / 1 for warn-or-fail.
+[![CI](https://img.shields.io/github/actions/workflow/status/mrodgersjs-web/mesh-studio/ci.yml?branch=main)](https://github.com/mrodgersjs-web/mesh-studio/actions/workflows/ci.yml)
+
 
 
 ## Employer summary
@@ -79,7 +81,7 @@ pip install git+https://github.com/mrodgersjs-web/mesh-studio.git
 Or from source:
 ```bash
 git clone https://github.com/mrodgersjs-web/mesh-studio.git
-cd RIG-Mesh
+cd mesh-studio
 pip install -e .                    # CLI only (stdlib)
 pip install -e ".[dashboard]"       # CLI + :8091 FastAPI dashboard
 pip install -e ".[dev]"             # everything + tests
