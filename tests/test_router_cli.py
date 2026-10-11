@@ -16,8 +16,6 @@ from rig_mesh.router import CommandRouter
 from rig_mesh.subsystems import Subsystem, SubsystemRegistry
 
 
-
-
 def _assert_cli_parse_error_json(capsys, monkeypatch, argv: list[str]) -> dict:
     constructed = False
 
