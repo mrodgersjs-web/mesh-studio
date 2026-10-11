@@ -63,7 +63,7 @@ The default registry knows about the canonical RIG Sovereign stack. Edit
 | Queue | `idle-queue` (critical) | heartbeat .omx/state/rig-sovereign/idle-queue-heartbeat.json |
 | Watchdog | `cell-watcher`, `healer-daemon`, `rig-247-supervisor` | launchd + heartbeat |
 | Observability | `monitor-runner`, `meta-monitor` | heartbeat |
-| Dashboards | `cockpit-v5` :8090, `deviation-dashboard` :8078, `studio-dashboard` :8077, `progress-board` :8083, `avis-nps` :8079 | HTTP /health |
+| Dashboards | `cockpit-v5` :8090, `deviation-dashboard` :8078, `studio-dashboard` :8077, `progress-board` :8083, `nps-survey` :8079 | HTTP /health |
 | Model layer | `litellm-mesh-router` :4000 | HTTP /health |
 | Hygiene | `backup-runner`, `retention-runner`, `escalation-runner` | launchd |
 | Compute | `node-worker` | heartbeat |
@@ -307,7 +307,7 @@ Whenever you add a new model or service:
 
 ## Contact + provenance
 
-- **Maintainer**: Mike Rodgers (rodgemd1@gmail.com)
+- **Maintainer**: Mike Rodgers (mrodgersjs@gmail.com)
 - **Origin commit**: PR #44 in rodgemd1-lgtm/Startup-Intelligence-OS, merged 2026-05-19
 - **Co-author of the initial extraction**: Claude Opus 4.7 (1M context)
 - **License**: MIT

@@ -479,8 +479,8 @@ def default_registry() -> SubsystemRegistry:
     ))
 
     reg.register(Subsystem(
-        name="avis-nps",
-        description="AVIS NPS MVP on :8079.",
+        name="nps-survey",
+        description="NPS survey service on :8079.",
         kind="service",
         http_health=(8079, "/health"),
     ))
