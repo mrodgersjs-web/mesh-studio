@@ -9,7 +9,7 @@ description = "Top-level orchestrator CLI for the RIG Sovereign system — boot,
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.10"
-authors = [{ name = "Mike Rodgers", email = "rodgemd1@gmail.com" }]
+authors = [{ name = "Mike Rodgers", email = "mrodgersjs@gmail.com" }]
 keywords = ["rig", "sovereign", "orchestrator", "cli", "operations", "monitoring", "launchd"]
 classifiers = [
     "Development Status :: 4 - Beta",

@@ -297,7 +297,7 @@ tooling for routing decisions.
 | `deviation-dashboard` | service | | HTTP :8078 /health |
 | `studio-dashboard` | service | | HTTP :8077 /health |
 | `progress-board` | service | | HTTP :8083 /health |
-| `avis-nps` | service | | HTTP :8079 /health |
+| `nps-survey` | service | | HTTP :8079 /health |
 | `litellm-mesh-router` | service | | HTTP :4000 /health |
 | `backup-runner` | daemon | | launchd (com.rig.backup-runner) |
 | `retention-runner` | daemon | | launchd (com.rig.retention-runner) |
