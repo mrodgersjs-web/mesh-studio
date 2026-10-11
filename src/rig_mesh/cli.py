@@ -14,16 +14,26 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from typing import NoReturn
 
 from .router import CommandRouter
 
 
+class JsonArgumentParser(argparse.ArgumentParser):
+    """Emit parser failures as JSON on stderr while keeping --help unchanged."""
+
+    def error(self, message: str) -> NoReturn:
+        payload = {"ok": False, "error": message, "usage": self.format_usage().strip()}
+        self._print_message(json.dumps(payload, sort_keys=True) + "\n", sys.stderr)
+        raise SystemExit(2)
+
+
 def _build_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(
+    p = JsonArgumentParser(
         prog="rig-master",
         description="RIG Sovereign master orchestrator CLI",
     )
-    sub = p.add_subparsers(dest="verb", required=True)
+    sub = p.add_subparsers(dest="verb", required=True, parser_class=JsonArgumentParser)
 
     s_status = sub.add_parser("status", help="Snapshot every subsystem health")
     s_status.add_argument("--write", action="store_true", help="Write status-latest.json")
