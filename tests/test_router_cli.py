@@ -9,11 +9,35 @@ from pathlib import Path
 
 import pytest
 
+import rig_mesh.cli as cli_mod
 from rig_mesh.cli import main as cli_main
 from rig_mesh.master import RigMaster
 from rig_mesh.router import CommandRouter
 from rig_mesh.subsystems import Subsystem, SubsystemRegistry
 
+
+
+
+def _assert_cli_parse_error_json(capsys, monkeypatch, argv: list[str]) -> dict:
+    constructed = False
+
+    def fail_router():
+        nonlocal constructed
+        constructed = True
+        raise AssertionError("CommandRouter should not be constructed on parse errors")
+
+    monkeypatch.setattr(cli_mod, "CommandRouter", fail_router)
+    with pytest.raises(SystemExit) as e:
+        cli_main(argv)
+    captured = capsys.readouterr()
+    assert e.value.code == 2
+    assert captured.out == ""
+    payload = json.loads(captured.err)
+    assert payload["ok"] is False
+    assert payload["error"]
+    assert payload["usage"].startswith("usage: rig-master")
+    assert constructed is False
+    return payload
 
 def _build_router(tmp_path: Path) -> CommandRouter:
     reg = SubsystemRegistry()
@@ -98,14 +122,35 @@ def test_cli_version_exits_0(capsys):
     assert payload["rig_master"]
 
 
-def test_cli_unknown_verb_exits_nonzero(capsys):
+def test_cli_help_exits_0_human_readable(capsys):
     with pytest.raises(SystemExit) as e:
-        cli_main(["nope"])
-    assert e.value.code != 0
+        cli_main(["--help"])
+    captured = capsys.readouterr()
+    assert e.value.code == 0
+    assert captured.out.startswith("usage: rig-master")
+    assert captured.err == ""
 
 
-def test_cli_probe_with_missing_name_returns_nonzero(capsys):
-    """`probe` without --name should exit nonzero through argparse."""
-    with pytest.raises(SystemExit) as e:
-        cli_main(["probe"])
-    assert e.value.code != 0
+def test_cli_root_missing_command_parse_error_json(capsys, monkeypatch):
+    payload = _assert_cli_parse_error_json(capsys, monkeypatch, [])
+    assert "required" in payload["error"]
+
+
+def test_cli_unknown_verb_parse_error_json(capsys, monkeypatch):
+    payload = _assert_cli_parse_error_json(capsys, monkeypatch, ["nope"])
+    assert "invalid choice" in payload["error"]
+
+
+def test_cli_probe_with_missing_name_parse_error_json(capsys, monkeypatch):
+    payload = _assert_cli_parse_error_json(capsys, monkeypatch, ["probe"])
+    assert "--name" in payload["error"]
+
+
+def test_cli_boot_invalid_numeric_arg_parse_error_json(capsys, monkeypatch):
+    payload = _assert_cli_parse_error_json(capsys, monkeypatch, ["boot", "--max-wait-s", "not-a-number"])
+    assert "invalid float value" in payload["error"]
+
+
+def test_cli_unknown_option_parse_error_json(capsys, monkeypatch):
+    payload = _assert_cli_parse_error_json(capsys, monkeypatch, ["version", "--wat"])
+    assert "unrecognized arguments" in payload["error"]

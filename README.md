@@ -103,7 +103,7 @@ rig-mesh boot --max-wait-s 10          # cold-boot in dependency order
 rig-mesh recover --dry-run             # preview recovery flows
 ```
 
-All output is JSON. Exit code reflects health: `0` ok, `1` warn or fail.
+Command results are JSON on stdout. Parser/usage errors are one JSON object on stderr and exit `2`; `--help` stays human-readable on stdout and exits `0`. Command status exits are `0` for ok and `1` for warn or fail.
 
 ---
 
