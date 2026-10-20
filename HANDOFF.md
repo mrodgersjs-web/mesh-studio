@@ -7,7 +7,7 @@ of operating the system, or when picking the project back up after a break.
 
 ## What it is in one paragraph
 
-`rig-mesh` is a Python CLI installed via `pip install git+https://github.com/rodgemd1-lgtm/RIG-Mesh.git`.
+`rig-mesh` is a Python CLI installed via `pip install git+https://github.com/mrodgersjs-web/mesh-studio.git`.
 After install, the `rig-mesh` command is on your `$PATH`. It treats every
 piece of your AI infrastructure (model routers, queue runners, dashboards,
 healers, backup daemons) as a declarative **Subsystem** and gives you six
@@ -18,7 +18,7 @@ itself — it is the control plane that sits above them.
 
 ## Where the code lives
 
-- **GitHub**: https://github.com/rodgemd1-lgtm/RIG-Mesh
+- **GitHub**: https://github.com/mrodgersjs-web/mesh-studio
 - **Default branch**: `main`
 - **License**: MIT
 - **Origin**: extracted from `services/rig_master/` in
@@ -187,7 +187,7 @@ recover it (`rig-mesh recover`) without launching work that would fail.
 
 | Env var | Effect | Default |
 |---|---|---|
-| `RIG_REPO_ROOT` | Override repo root | walks up from package install for `CLAUDE.md`, falls back to `~/Desktop/Startup-Intelligence-OS` |
+| `RIG_REPO_ROOT` | Override repo root | walks up from package install for `CLAUDE.md`, falls back to the user's home directory |
 | `RIG_STATE_DIR` | Override state dir | `<repo>/.omx/state/rig-sovereign` |
 | `RIG_TEST_BYPASS_AUTH` | Bypass dashboard auth in TestClient only | unset (production never sets this) |
 

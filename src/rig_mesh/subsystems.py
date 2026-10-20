@@ -16,15 +16,12 @@ stdlib only. No live LLM. No FastAPI dep — those callers wrap us.
 """
 from __future__ import annotations
 
-import json
 import os
 import socket
 import subprocess
 import time
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Any, Callable, Optional
-
 
 # ---------------------------------------------------------------------------
 # Path resolution — env-overridable so the CLI works against any RIG install
@@ -33,7 +30,7 @@ from typing import Any, Callable, Optional
 # REPO_ROOT resolution order:
 #   1. $RIG_REPO_ROOT env var
 #   2. Walk up from this file looking for a CLAUDE.md marker
-#   3. Fall back to ~/Desktop/Startup-Intelligence-OS (canonical install)
+#   3. Fall back to the user's home directory
 #
 # STATE_DIR resolution order:
 #   1. $RIG_STATE_DIR env var
@@ -53,7 +50,7 @@ def _repo_root() -> Path:
         if parent == candidate:
             break
         candidate = parent
-    return Path.home() / "Desktop" / "Startup-Intelligence-OS"
+    return Path.home()
 
 
 def _state_dir(root: Path) -> Path:
@@ -80,8 +77,8 @@ class ProbeResult:
     ok: bool
     status: str         # one of: "live_ok" | "stale" | "no_data" | "down" | "unknown"
     detail: str         # human-readable diagnostic
-    age_seconds: Optional[int] = None
-    pid: Optional[int] = None
+    age_seconds: int | None = None
+    pid: int | None = None
     probe_kind: str = "none"
 
     def to_dict(self) -> dict:
@@ -94,9 +91,9 @@ class Subsystem:
     name: str
     description: str
     kind: str                                    # daemon | service | library | gate
-    launchd_label: Optional[str] = None
-    http_health: Optional[tuple[int, str]] = None  # (port, path) e.g. (8090, "/health")
-    heartbeat_path: Optional[Path] = None
+    launchd_label: str | None = None
+    http_health: tuple[int, str] | None = None  # (port, path) e.g. (8090, "/health")
+    heartbeat_path: Path | None = None
     heartbeat_max_age_s: int = 300
     depends_on: list[str] = field(default_factory=list)
     critical: bool = False
@@ -154,7 +151,7 @@ class Subsystem:
                 detail=f"HTTP {status_code} on :{port}{path}",
                 probe_kind="http",
             )
-        except (socket.error, ConnectionRefusedError, OSError) as e:
+        except (ConnectionRefusedError, OSError) as e:
             return ProbeResult(
                 name=self.name,
                 ok=False,
@@ -258,7 +255,7 @@ class Subsystem:
                 name=self.name,
                 ok=True,
                 status="live_ok",
-                detail=f"launchd one-shot, last_exit=0",
+                detail="launchd one-shot, last_exit=0",
                 probe_kind="launchd",
             )
         return ProbeResult(
