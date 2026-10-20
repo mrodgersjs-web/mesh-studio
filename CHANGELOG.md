@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.0] - 2026-10-19
 
+Polish wave (2026-10-19, same day, this commit): `timeout-minutes: 15` was added to
+every job in `.github/workflows/ci.yml`, `rig-lattice.yml`, `smoke.yml` and
+`weekly.yml`, and `tests/test_repo_hygiene.py` was added. That test asserts from
+the files on disk that `.github/CODEOWNERS` contains `* @mrodgersjs-web`, that
+`.github/copilot-instructions.md` exists within 8000 bytes and names a test
+command, that the README carries a `github/actions/workflow/status` badge, the
+`rodgersintelligence.com` footer, a test command word and clone examples targeting
+`mrodgersjs-web/mesh-studio`, and that every workflow job has `timeout-minutes`
+and no `continue-on-error`.
+
+
 ### Added
 - `tests/test_packaging.py` asserting the package version matches the
   pyproject metadata and the `py.typed` marker ships.

@@ -20,6 +20,7 @@ jobs:
   weekly-test:
     name: Weekly pytest (py${{ matrix.python }})
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
@@ -44,6 +45,7 @@ jobs:
   weekly-smoke:
     name: Weekly smoke gate
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: weekly-test
     steps:
       - uses: actions/checkout@v4
