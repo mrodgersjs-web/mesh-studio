@@ -1,10 +1,18 @@
 # Security Policy
 
+## Supported versions
+
+| Version | Supported |
+| --- | --- |
+| 1.1.x | yes |
+| 1.0.x | security fixes only |
+| < 1.0 | no |
+
 ## Supported surfaces
 This repository's public `main` branch.
 
 ## Reporting
-Email **mrodgersjs@gmail.com** with:
+Email **security@rodgersintelligence.com** with:
 - affected path / command
 - impact
 - proof of concept (non-destructive)
