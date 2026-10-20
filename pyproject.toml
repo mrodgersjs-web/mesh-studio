@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rig-mesh"
-version = "1.0.0"
+version = "1.1.0"
 description = "Top-level orchestrator CLI for the RIG Sovereign system — boot, audit, probe, recover."
 readme = "README.md"
 license = { text = "MIT" }
@@ -30,12 +30,12 @@ dependencies = []   # stdlib only — fastapi + uvicorn are opt-in for the dashb
 dashboard = ["fastapi>=0.100", "uvicorn[standard]>=0.20", "starlette>=0.27"]
 mcp = ["mcp>=1.23.0,<2.0"]
 test = ["pytest>=7", "pytest-timeout>=2"]
-dev = ["pytest>=7", "pytest-timeout>=2", "fastapi>=0.100", "uvicorn[standard]>=0.20", "httpx>=0.24"]
+dev = ["pytest>=7", "pytest-cov>=4", "pytest-timeout>=2", "ruff>=0.4", "fastapi>=0.100", "uvicorn[standard]>=0.20", "httpx>=0.24"]
 
 [project.urls]
 Homepage = "https://github.com/mrodgersjs-web/mesh-studio"
+Repository = "https://github.com/mrodgersjs-web/mesh-studio"
 Issues = "https://github.com/mrodgersjs-web/mesh-studio/issues"
-Source = "https://github.com/mrodgersjs-web/mesh-studio"
 
 [project.scripts]
 rig-mesh = "rig_mesh.cli:main"
@@ -43,6 +43,9 @@ rig-mesh-mcp = "rig_mesh.mcp_server:main"
 
 [tool.setuptools]
 package-dir = { "" = "src" }
+
+[tool.setuptools.package-data]
+rig_mesh = ["py.typed"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -52,3 +55,17 @@ include = ["rig_mesh*"]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["B011"]
+# B008: FastAPI dependency injection requires the call-in-default pattern.
+"src/rig_mesh/dashboard.py" = ["B008"]
