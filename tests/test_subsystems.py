@@ -14,7 +14,6 @@ from rig_mesh.subsystems import (
     default_registry,
 )
 
-
 # ---------------------------------------------------------------------------
 # ProbeResult dataclass
 

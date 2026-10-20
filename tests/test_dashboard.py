@@ -1,10 +1,6 @@
 """Tests for rig_mesh.dashboard."""
 from __future__ import annotations
 
-import json
-import os
-from pathlib import Path
-
 import pytest
 
 
@@ -24,7 +20,7 @@ def _bypass_auth(monkeypatch):
 
 @pytest.mark.skipif(not _has_fastapi(), reason="fastapi not installed")
 def test_dashboard_app_exists():
-    from rig_mesh.dashboard import app, PORT
+    from rig_mesh.dashboard import PORT, app
     assert app is not None
     assert PORT == 8091
 
@@ -32,6 +28,7 @@ def test_dashboard_app_exists():
 @pytest.mark.skipif(not _has_fastapi(), reason="fastapi not installed")
 def test_dashboard_health_returns_200():
     from fastapi.testclient import TestClient
+
     from rig_mesh.dashboard import app
     client = TestClient(app)
     resp = client.get("/health")
@@ -44,6 +41,7 @@ def test_dashboard_health_returns_200():
 @pytest.mark.skipif(not _has_fastapi(), reason="fastapi not installed")
 def test_dashboard_root_returns_html():
     from fastapi.testclient import TestClient
+
     from rig_mesh.dashboard import app
     client = TestClient(app)
     resp = client.get("/")
@@ -56,6 +54,7 @@ def test_dashboard_root_returns_html():
 @pytest.mark.skipif(not _has_fastapi(), reason="fastapi not installed")
 def test_dashboard_api_status_returns_json():
     from fastapi.testclient import TestClient
+
     from rig_mesh.dashboard import app
     client = TestClient(app)
     resp = client.get("/api/status")
@@ -69,6 +68,7 @@ def test_dashboard_api_status_returns_json():
 @pytest.mark.skipif(not _has_fastapi(), reason="fastapi not installed")
 def test_dashboard_api_list_returns_subsystems():
     from fastapi.testclient import TestClient
+
     from rig_mesh.dashboard import app
     client = TestClient(app)
     resp = client.get("/api/list")
@@ -81,6 +81,7 @@ def test_dashboard_api_list_returns_subsystems():
 @pytest.mark.skipif(not _has_fastapi(), reason="fastapi not installed")
 def test_dashboard_api_probe_known_subsystem():
     from fastapi.testclient import TestClient
+
     from rig_mesh.dashboard import app
     client = TestClient(app)
     # Use a known subsystem from the default registry.
@@ -94,6 +95,7 @@ def test_dashboard_api_probe_known_subsystem():
 @pytest.mark.skipif(not _has_fastapi(), reason="fastapi not installed")
 def test_dashboard_api_probe_unknown_returns_error():
     from fastapi.testclient import TestClient
+
     from rig_mesh.dashboard import app
     client = TestClient(app)
     resp = client.get("/api/probe/does-not-exist")
@@ -119,9 +121,11 @@ def test_dashboard_boot_endpoint_rejects_without_auth(monkeypatch):
     """Codex P2 fix: /api/boot must NOT be reachable without auth or bypass."""
     # Force-disable the bypass for THIS test only
     monkeypatch.delenv("RIG_TEST_BYPASS_AUTH", raising=False)
-    from fastapi.testclient import TestClient
     # Re-import so the route registration picks up the bypass-off state
     import importlib
+
+    from fastapi.testclient import TestClient
+
     import rig_mesh.dashboard as dash_mod
     importlib.reload(dash_mod)
     client = TestClient(dash_mod.app)
@@ -141,8 +145,10 @@ def test_dashboard_boot_endpoint_rejects_without_auth(monkeypatch):
 def test_dashboard_recover_endpoint_rejects_without_auth(monkeypatch):
     """Companion: /api/recover must also reject unauthenticated POSTs."""
     monkeypatch.delenv("RIG_TEST_BYPASS_AUTH", raising=False)
-    from fastapi.testclient import TestClient
     import importlib
+
+    from fastapi.testclient import TestClient
+
     import rig_mesh.dashboard as dash_mod
     importlib.reload(dash_mod)
     client = TestClient(dash_mod.app)

@@ -8,14 +8,12 @@ import guard).
 from __future__ import annotations
 
 import json
-from pathlib import Path
 
 import pytest
 
 from rig_mesh.mcp_server import (
     HEALTH_CHECK_PROMPT,
     prompt_health_check,
-    resource_audit_latest,
     resource_registry,
     tool_get_status,
     tool_list_subsystems,
@@ -23,7 +21,6 @@ from rig_mesh.mcp_server import (
     tool_run_audit,
     tool_smoke,
 )
-
 
 # ---------------------------------------------------------------------------
 # tool_smoke
@@ -177,7 +174,6 @@ def test_health_check_prompt_no_snapshot_calls_get_status():
 def test_build_mcp_server_raises_import_error_when_mcp_missing(monkeypatch):
     """If the mcp package is absent, build_mcp_server raises ImportError."""
     import sys
-    import importlib
 
     # Temporarily hide the mcp package
     original = sys.modules.get("mcp")

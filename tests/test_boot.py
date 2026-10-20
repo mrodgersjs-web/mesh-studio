@@ -4,8 +4,6 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-import pytest
-
 from rig_mesh.boot import BootReport, BootRunner, BootStepResult
 from rig_mesh.subsystems import Subsystem, SubsystemRegistry
 

@@ -5,9 +5,7 @@ import json
 import time
 from pathlib import Path
 
-import pytest
-
-from rig_mesh.audit import MasterAuditReport, MasterAuditor
+from rig_mesh.audit import MasterAuditor
 from rig_mesh.subsystems import (
     Subsystem,
     SubsystemRegistry,

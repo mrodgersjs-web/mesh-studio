@@ -4,8 +4,6 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-import pytest
-
 from rig_mesh.cli import main as cli_main
 from rig_mesh.master import RigMaster
 from rig_mesh.router import CommandRouter
