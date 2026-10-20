@@ -1,4 +1,4 @@
-# Evaluation strategy — Mesh Studio
+# Evaluation strategy: Mesh Studio
 
 ## Gates
 | Gate | Command | Pass |
