@@ -14,22 +14,16 @@ stdlib only.
 from __future__ import annotations
 
 import json
-import time
-from dataclasses import dataclass
 from datetime import datetime, timezone
-from pathlib import Path
-from typing import Any, Optional
 
 from .audit import MasterAuditor, MasterAuditReport
-from .boot import BootRunner, BootReport
+from .boot import BootReport, BootRunner
 from .recovery import Recovery, RecoveryReport
 from .subsystems import (
-    Subsystem,
+    STATE_DIR,
     SubsystemRegistry,
     default_registry,
-    STATE_DIR,
 )
-
 
 _MASTER_DIR = STATE_DIR / "rig-master"
 
@@ -114,7 +108,7 @@ class RigMaster:
     # ------------------------------------------------------------------
     def recover(
         self,
-        flows: Optional[list[str]] = None,
+        flows: list[str] | None = None,
         dry_run: bool = False,
     ) -> RecoveryReport:
         """Run the requested recovery flows."""

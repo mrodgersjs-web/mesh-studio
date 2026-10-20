@@ -47,7 +47,6 @@ from __future__ import annotations
 
 import argparse
 import json
-from typing import Any
 
 from .router import CommandRouter
 

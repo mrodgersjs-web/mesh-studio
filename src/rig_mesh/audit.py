@@ -10,20 +10,16 @@ from __future__ import annotations
 
 import json
 import time
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
 
 from .subsystems import (
+    STATE_DIR,
     ProbeResult,
-    Subsystem,
     SubsystemRegistry,
     default_registry,
-    REPO_ROOT,
-    STATE_DIR,
 )
-
 
 _REPORT_DIR = STATE_DIR / "rig-master"
 

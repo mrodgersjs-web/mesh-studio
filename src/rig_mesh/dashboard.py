@@ -19,12 +19,10 @@ Endpoints:
 """
 from __future__ import annotations
 
-import json
-import os
-from typing import Any, Optional
+from typing import Any
 
 try:
-    from fastapi import FastAPI, HTTPException, Request, Depends
+    from fastapi import Depends, FastAPI
     from fastapi.responses import HTMLResponse, JSONResponse
     _FASTAPI_OK = True
 except ImportError:  # pragma: no cover - degraded environment
@@ -35,6 +33,8 @@ except ImportError:  # pragma: no cover - degraded environment
 try:
     from services.security.middleware import (
         add_auth_middleware as _add_auth_middleware,
+    )
+    from services.security.middleware import (
         require_scope as _require_scope,
     )
     _AUTH_OK = True
@@ -53,7 +53,6 @@ except ImportError:  # pragma: no cover - degraded environment
         return _noop
 
 from .router import CommandRouter
-
 
 PORT = 8091
 _router = CommandRouter()
@@ -127,7 +126,7 @@ def _h(s: Any) -> str:
 
 # ---------------------------------------------------------------------------
 
-def create_app() -> Optional["FastAPI"]:
+def create_app() -> FastAPI | None:
     """Return a FastAPI app, or None if FastAPI isn't installed."""
     if not _FASTAPI_OK:
         return None

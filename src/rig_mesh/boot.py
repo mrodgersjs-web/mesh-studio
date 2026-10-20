@@ -14,19 +14,17 @@ import json
 import os
 import subprocess
 import time
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Optional
 
 from .subsystems import (
+    STATE_DIR,
     ProbeResult,
     Subsystem,
     SubsystemRegistry,
     default_registry,
-    STATE_DIR,
 )
-
 
 _BOOT_DIR = STATE_DIR / "rig-master" / "boot"
 
@@ -54,7 +52,7 @@ class BootReport:
     ok_count: int = 0
     skipped: int = 0
     failed: int = 0
-    aborted_on: Optional[str] = None  # subsystem name that aborted the boot
+    aborted_on: str | None = None  # subsystem name that aborted the boot
 
     def to_dict(self) -> dict:
         return {
@@ -138,7 +136,7 @@ class BootRunner:
     ) -> ProbeResult:
         """Block up to max_wait_s for the subsystem to report healthy."""
         deadline = time.monotonic() + max_wait_s
-        last: Optional[ProbeResult] = None
+        last: ProbeResult | None = None
         while time.monotonic() < deadline:
             last = sub.probe()
             if last.ok:

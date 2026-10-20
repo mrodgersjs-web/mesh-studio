@@ -19,22 +19,17 @@ from __future__ import annotations
 import json
 import os
 import shutil
-import sqlite3
-import subprocess
 import time
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Optional
 
 from .subsystems import (
-    Subsystem,
+    REPO_ROOT,
+    STATE_DIR,
     SubsystemRegistry,
     default_registry,
-    STATE_DIR,
-    REPO_ROOT,
 )
-
 
 _RECOVERY_DIR = STATE_DIR / "rig-master" / "recovery"
 _BACKUP_DIR = Path.home() / ".rig" / "backups" / "proof_store"
@@ -262,7 +257,7 @@ class Recovery:
         )
 
     # ------------------------------------------------------------------
-    def run(self, flows: Optional[list[str]] = None, dry_run: bool = False) -> RecoveryReport:
+    def run(self, flows: list[str] | None = None, dry_run: bool = False) -> RecoveryReport:
         """Run the requested recovery flows."""
         flows = flows or ["restart_dead_daemons", "replay_blocked_queue"]
         report = RecoveryReport(
@@ -292,7 +287,7 @@ class Recovery:
 
 # ---------------------------------------------------------------------------
 
-def run_recovery(flows: Optional[list[str]] = None, dry_run: bool = False) -> RecoveryReport:
+def run_recovery(flows: list[str] | None = None, dry_run: bool = False) -> RecoveryReport:
     return Recovery().run(flows=flows, dry_run=dry_run)
 
 
