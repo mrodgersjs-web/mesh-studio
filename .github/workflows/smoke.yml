@@ -19,5 +19,11 @@ jobs:
           if [ -f package.json ]; then
             if command -v npm >/dev/null; then npm ci || npm install || true; fi
           fi
+      - name: Real tests
+        env:
+          RIG_TEST_BYPASS_AUTH: "1"
+        run: |
+          pip install -e ".[dev]"
+          pytest -q
       - name: Smoke
         run: bash scripts/smoke.sh
